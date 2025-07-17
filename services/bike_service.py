@@ -17,13 +17,24 @@ def load_bike():
     return []
 
 def generate_bike_id():
-    letter_digits_id = string.ascii_uppercase + string.digits
+    bikes = load_bike()
 
-    id_for_bike = ""
+    if not bikes:
+        return "0001"
 
-    for i in range(10):
-        id_for_bike = id_for_bike +random.choice(letter_digits_id)
-    return id_for_bike
+    last_bike = bikes[-1]
+    last_id = int(last_bike["bike_id"])
+    next_id = last_id + 1
+    return "{:04d}".format(next_id)
+
+
+    # letter_digits_id = string.ascii_uppercase + string.digits
+    #
+    # id_for_bike = ""
+    #
+    # for i in range(10):
+    #     id_for_bike = id_for_bike + random.choice(letter_digits_id)
+    # return id_for_bike
 
 
 
