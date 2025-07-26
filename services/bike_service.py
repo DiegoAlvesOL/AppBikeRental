@@ -28,16 +28,6 @@ def generate_bike_id():
     return "{:04d}".format(next_id)
 
 
-    # letter_digits_id = string.ascii_uppercase + string.digits
-    #
-    # id_for_bike = ""
-    #
-    # for i in range(10):
-    #     id_for_bike = id_for_bike + random.choice(letter_digits_id)
-    # return id_for_bike
-
-
-
 def add_bike(bike_obj):
     bike_data = bike_obj.to_dict()
 
@@ -47,3 +37,15 @@ def add_bike(bike_obj):
 
     with open(file_path_data_bike, "w") as file:
         json.dump(bikes, file, indent=4)
+
+def set_bike_unavailable(bike_id):
+    bikes = load_bike()
+
+    for bike in bikes:
+        if bike ["bike_id"] == bike_id:
+            bike ["is_available"] = False
+            break
+    with open(file_path_data_bike, "w") as file:
+        json.dump(bikes, file, indent=4)
+
+
