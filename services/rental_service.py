@@ -1,60 +1,11 @@
 import json
 import os.path
-from json import JSONDecodeError
+
 from datetime import datetime, timedelta
+from utils.data_loader import load_rentals, load_rental_cost, load_bikes
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
-file_path_data_bikes = os.path.join(base_dir,"../data/bikes.json")
-file_path_data_customers = os.path.join(base_dir,"../data/customers.json")
 file_path_data_rentals = os.path.join(base_dir, "../data/rentals.json")
-file_path_data_rental_cost = os.path.join(base_dir, "../utils/rental_rates.json")
-
-
-def load_bikes():
-    if os.path.exists(file_path_data_bikes):
-        with open(file_path_data_bikes, "r") as file:
-            try:
-                data_bikes = json.load(file)
-            except JSONDecodeError:
-                data_bikes = []
-            return data_bikes
-    return []
-
-
-def load_customers():
-    if os.path.exists(file_path_data_customers):
-        with open(file_path_data_customers, "r") as file:
-            try:
-                data_customers = json.load(file)
-            except JSONDecodeError:
-                data_customers = []
-            return  data_customers
-    return []
-
-
-def load_rentals():
-    if os.path.exists(file_path_data_rentals):
-        with open(file_path_data_rentals, "r")as file:
-            try:
-                data_rentals = json.load(file)
-            except JSONDecodeError:
-                data_rentals = []
-            return data_rentals
-    return []
-
-
-def load_rental_cost():
-    if os.path.exists(file_path_data_rental_cost):
-        with open(file_path_data_rental_cost, "r") as file:
-            try:
-                data_rental = json.load(file)
-                if isinstance(data_rental, dict):
-                    return data_rental
-                else:
-                    return {}
-            except JSONDecodeError:
-                return {}
-    return {}
 
 
 def generate_rental_id():
@@ -109,7 +60,6 @@ def available_bike():
     for bike in bikes:
         if bike.get("is_available") == True:
             available.append(bike)
-
     return available
 
 
