@@ -1,26 +1,29 @@
+"""
+This module handles operations related to bike management, such as registration,
+availability checking, ID generation, and updating bike status.
+"""
+
 import json
 import os.path
 from datetime import date
 from models.bike import Bike
 from utils.data_loader import load_bikes
 
+# Sets the path to the JSON file where bike data is stored
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 file_path_data_bike = os.path.join(BASE_DIR,"../data/bikes.json")
 
-
+# Generates a new bike ID based on the last bike's ID in the data
 def generate_bike_id():
     bikes = load_bikes()
-
     if not bikes:
         return "0001"
-
     last_bike = bikes[-1]
     last_id = int(last_bike["bike_id"])
     next_id = last_id + 1
     return "{:04d}".format(next_id)
 
-
-
+# Adds a new bike to the bike list and saves it to the JSON file
 def add_bike(bike_obj):
     bike_data = bike_obj.to_dict()
     bikes = load_bikes()
@@ -29,6 +32,40 @@ def add_bike(bike_obj):
     with open(file_path_data_bike, "w") as file:
         json.dump(bikes, file, indent=4)
 
+# Sets a bike's availability to False (unavailable) by its ID
+def set_bike_unavailable(bike_id):
+    bikes = load_bikes()
+
+    for bike in bikes:
+        if bike["bike_id"] == bike_id:
+            bike["is_available"] = False
+            break
+    with open(file_path_data_bike, "w") as file:
+        json.dump(bikes, file, indent=4)
+
+# Validates whether the input bike ID exists and is available for rent
+def valid_bike_id(input_bike_id):
+    bikes = load_bikes()
+    for bike in bikes:
+        if bike["bike_id"] == input_bike_id:
+            if bike.get("is_available") == True:
+                return True
+            else:
+                print("This bike is currently rented. Please choose another one.")
+                return False
+    print("Bike ID not found")
+    return False
+
+# Returns a list of all bikes that are currently available
+def available_bike():
+    bikes = load_bikes()
+    available = []
+    for bike in bikes:
+        if bike.get("is_available") == True:
+            available.append(bike)
+    return available
+
+# Handles user input to register a new bike and saves it to the data file
 def register_new_bike():
     print("\n --- Registering a new Bike ---")
     bike_id = generate_bike_id()
@@ -46,17 +83,4 @@ def register_new_bike():
 
     add_bike(bike_obj)
     print("\nBike registered successfully!\n")
-
-
-
-def set_bike_unavailable(bike_id):
-    bikes = load_bikes()
-
-    for bike in bikes:
-        if bike ["bike_id"] == bike_id:
-            bike ["is_available"] = False
-            break
-    with open(file_path_data_bike, "w") as file:
-        json.dump(bikes, file, indent=4)
-
 
