@@ -21,23 +21,24 @@ Each entity (bikes, rentals, and customers) is stored in JSON files for persiste
 ## Project Structure
 
 ```
-AppBikeRental/
-├── main.py                     # Main menu and application loop
-├── models/
-│   ├── bike.py                 # Bike class definition
-│   ├── rental.py               # Rental class definition
-│   └── customer.py             # Customer class definition
-├── services/
-│   ├── bike_service.py         # Bike-related business logic
-│   ├── rental_service.py       # Rental and return logic
-│   └── customer_service.py     # Customer management logic
-├── utils/
-│   └── rental_rates.py         # Centralized rental pricing
+bike_rental/
 ├── data/
-│   ├── bikes.json              # Persistent bike data
-│   ├── rentals.json            # Persistent rental data
-│   └── customers.json          # Persistent customer data
-
+│   ├── bikes.json
+│   ├── customers.json
+│   ├── rentals.json
+│   └── rental_rates.json
+├── models/
+│   ├── bike.py
+│   ├── customer.py
+│   └── rental.py
+├── services/
+│   ├── bike_service.py
+│   ├── customer_service.py
+│   └── rental_service.py
+├── utils/
+│   ├── data_loader.py
+│   └── input_validation.py  # futuro
+├── main.py
 ```
 
 ## How to Run
