@@ -1,52 +1,75 @@
 
 # AppBikeRental
 
-This is a Python application that simulates a simple **bike rental system**.  
-It was created as part of the *Programming Essentials 2* module for the BSc in Computing & Multimedia program.
+**AppBikeRental** is an academic project developed for the *Programming Essentials 2* module at **Dorset College**.  
+The goal of this software is to provide a console-based system for managing **bike rentals**, using **Object-Oriented Programming (OOP)** principles and persistent storage in JSON format.
 
-## Features implemented
+## Features
 
-- Register new bikes with ID, model, type, availability, and registration date.
-- All bike data is saved into a `.json` file.
-- Uses Object-Oriented Programming (OOP) with custom classes.
+This application offers the following functionalities via a simple text-based menu:
 
-## Project structure
+1. **Show all bikes**
+2. **Add new bike**
+3. **Register customer**
+4. **Rent a bike**
+5. **Return a bike**
+6. **Search bike by type or ID**
+0. **Exit and save data**
+
+Each entity (bikes, rentals, and customers) is stored in JSON files for persistence between executions.
+
+## Project Structure
 
 ```
 AppBikeRental/
-├── main.py
+├── main.py                     # Main menu and application loop
 ├── models/
-│   └── bike.py
+│   ├── bike.py                 # Bike class definition
+│   ├── rental.py               # Rental class definition
+│   └── customer.py             # Customer class definition
 ├── services/
-│   └── bike_service.py
+│   ├── bike_service.py         # Bike-related business logic
+│   ├── rental_service.py       # Rental and return logic
+│   └── customer_service.py     # Customer management logic
+├── utils/
+│   └── rental_rates.py         # Centralized rental pricing
 ├── data/
-│   └── bikes.json
+│   ├── bikes.json              # Persistent bike data
+│   ├── rentals.json            # Persistent rental data
+│   └── customers.json          # Persistent customer data
+
 ```
 
-##  How to run
+## How to Run
 
-Make sure you have Python 3 installed.
+1. Make sure you have Python 3 installed.
+2. Clone this repository:
+   ```bash
+   git clone https://github.com/DiegoAlvesOL/AppBikeRental.git
+   ```
+3. Navigate to the project folder:
+   ```bash
+   cd AppBikeRental
+   ```
+4. Run the main application:
+   ```bash
+   python main.py
+   ```
 
-1. Clone the repository:
-```
-git clone https://github.com/yourusername/AppBikeRental.git
-```
-
-2. Open the project folder and run the application:
-```
-python main.py
-```
-
-3. Use the menu to register a new bike or access other features.
-
-##  Requirements
+## Requirements
 
 - Python 3
-- No external libraries needed for this stage.
+- `tabulate` library (used for table formatting).  
+  Install it using:
+  ```bash
+  pip install tabulate
+  ```
 
-##  Next steps
+## Notes
 
-- Show all bikes
-- Register customers
-- Rent and return bikes
-- Search by ID or type
+- All application data is stored locally in JSON format inside the `data/` directory.
+- Designed using Object-Oriented Programming and a modular architecture to facilitate future updates or feature expansions.
+
+## Academic Context
+
+This application was developed as part of the *Programming Essentials 2* coursework at **Dorset College**, with the objective of reinforcing software development concepts, file handling, and data persistence using Python.
