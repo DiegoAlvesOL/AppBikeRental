@@ -3,7 +3,7 @@ from operator import truediv
 from models.bike import Bike
 from models.customer import Customer
 from models.rental import Rental
-from services.bike_service import add_bike, generate_bike_id, set_bike_unavailable
+from services.bike_service import register_new_bike, set_bike_unavailable
 from datetime import date
 from tabulate import tabulate
 from services.rental_service import calculate_cost, end_rental, available_bike, create_rental
@@ -38,21 +38,7 @@ while True:
 
     # elif choice == "1": vou fazer essa parte em um segundo momento
     elif choice =="1":
-        bike_id = generate_bike_id()
-        model = input("Enter the bike model (e.g. Trek FX or Caloi 29): ").strip().title()
-        bike_type = input("Enter the bike type (e.g. Urban, Montain or Eletric): ").strip().title()
-        is_available = True
-        registered_date = date.today().isoformat()
-
-        bike_obj = Bike(bike_id,
-                        model,
-                        bike_type,
-                        is_available,
-                        registered_date
-        )
-
-        add_bike(bike_obj)
-        print("\nBike registered successfully!\n")
+        register_new_bike()
 
     elif choice =="2":
         customer_id = generate_customer_id()
