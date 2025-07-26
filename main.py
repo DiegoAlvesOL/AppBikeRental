@@ -3,15 +3,15 @@ from operator import truediv
 from models.bike import Bike
 from models.customer import Customer
 from models.rental import Rental
-from services.bike_service import add_bike, generate_bike_id, load_bike, set_bike_unavailable
+from services.bike_service import add_bike, generate_bike_id, set_bike_unavailable
 from datetime import date
-from services.customer_service import load_customer
 from tabulate import tabulate
 from services.rental_service import calculate_cost, end_rental, available_bike, create_rental
+from utils.data_loader import load_bikes,load_customers
 
 
 from services.customer_service import add_customer, generate_customer_id
-from services.rental_service import load_customers, generate_rental_id
+from services.rental_service import generate_rental_id
 
 print("+","="*37,"+")
 print("| WELCOME TO THE APP BIKE RENTAL SYSTEM |")
@@ -80,7 +80,7 @@ while True:
 
     elif choice == "3":
         rental_id = generate_rental_id()
-        customers = load_customer()
+        customers = load_customers()
 
         if not customers:
             print("\n⚠️ Nenhum cliente cadastrado. ⚠️\n")
@@ -107,7 +107,7 @@ while True:
                 )
                 add_customer(customer_obj)
                 print("\nCustomer registered successfully!\n")
-                customers = load_customer()
+                customers = load_customers()
 
             else:
                 print("Operation cancelled. Returning to the menu.")
@@ -138,7 +138,7 @@ while True:
             table_data = [[b["bike_id"], b["model"], b["bike_type"]] for b in available_bikes]
             print(tabulate(table_data, headers=["ID", "Model", "Type of Bike"], tablefmt="fancy_grid"))
 
-        bikes = load_bike()
+        bikes = load_bikes()
         valid_bike_id = []
         for bike in bikes:
             valid_bike_id.append(bike["bike_id"])
