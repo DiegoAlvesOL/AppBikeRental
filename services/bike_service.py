@@ -43,6 +43,18 @@ def set_bike_unavailable(bike_id):
     with open(file_path_data_bike, "w") as file:
         json.dump(bikes, file, indent=4)
 
+# Sets a bike as available by ID
+def set_bike_available(bike_id):
+    bikes =load_bikes()
+
+    for bike in bikes:
+        if bike["bike_id"] == bike_id["bike_id"]:
+            bike["is_available"] = True
+            break
+    with open(file_path_data_bike, "w") as file:
+        json.dump(bikes, file, indent=4)
+
+
 # Validates whether the input bike ID exists and is available for rent
 def valid_bike_id(input_bike_id):
     bikes = load_bikes()
