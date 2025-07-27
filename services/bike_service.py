@@ -8,6 +8,7 @@ import os.path
 from datetime import date
 from models.bike import Bike
 from utils.data_loader import load_bikes
+from tabulate import tabulate
 
 # Sets the path to the JSON file where bike data is stored
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -65,7 +66,7 @@ def valid_bike_id(input_bike_id):
             else:
                 print("This bike is currently rented. Please choose another one.")
                 return False
-    print("Bike ID not found")
+    print("--- Bike ID not found ---")
     return False
 
 # Returns a list of all bikes that are currently available
@@ -94,5 +95,32 @@ def register_new_bike():
                     )
 
     add_bike(bike_obj)
-    print("\nBike registered successfully!\n")
+    print("\n--- Bike registered successfully! ---\n")
 
+
+def display_all_bikes():
+    bikes = load_bikes()
+    if not bikes:
+        print("\n--- No Bikes found. ---")
+        return
+
+    table_data = [[bike["bike_id"], bike["model"], bike["bike_type"], bike["is_available"], bike["registered_date"]]
+                  for bike in bikes]
+    print(tabulate(table_data, headers=["Bike ID", "Model", "Type", "Availabel", "Registration date"], tablefmt="fancy_grid"))
+
+
+
+def search_bike():
+    bikes = load_bikes()
+    if not bikes:
+        print("--- No bikes available. ---")
+        return
+
+    bike_id = input("Enter the bike ID: ").strip()
+    for bike in bikes:
+        if bike["bike_id"] == bike_id:
+            table_data = [[bike["bike_id"], bike["model"], bike["bike_type"], bike["is_available"], bike["registered_date"]]]
+            print(tabulate(table_data,headers=["Bike ID", "Model", "Type", "Availabel", "Registration date"], tablefmt="fancy_grid"))
+
+
+    print("\n--- Bike id not found. ---")
