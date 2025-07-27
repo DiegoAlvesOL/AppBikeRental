@@ -64,7 +64,7 @@ def valid_bike_id(input_bike_id):
             if bike.get("is_available") == True:
                 return True
             else:
-                print("This bike is currently rented. Please choose another one.")
+                print("This bike is currently rented. Please choose notaher one.")
                 return False
     print("--- Bike ID not found ---")
     return False
@@ -77,6 +77,36 @@ def available_bike():
         if bike.get("is_available") == True:
             available.append(bike)
     return available
+
+
+# function to view all bikes
+def display_all_bikes():
+    bikes = load_bikes()
+    if not bikes:
+        print("\n--- No Bikes found. ---")
+        return
+
+    table_data = [[bike["bike_id"], bike["model"], bike["bike_type"], bike["is_available"], bike["registered_date"]]
+                  for bike in bikes]
+    print(tabulate(table_data, headers=["Bike ID", "Model", "Type", "Availabel", "Registration date"], tablefmt="fancy_grid"))
+
+
+# This function searches for bikes using by bike ID.
+def search_bike():
+    bikes = load_bikes()
+    if not bikes:
+        print("--- No bikes available. ---")
+        return
+
+    bike_id = input("Enter the bike ID: ").strip()
+    for bike in bikes:
+        if bike["bike_id"] == bike_id:
+            table_data = [[bike["bike_id"], bike["model"], bike["bike_type"], bike["is_available"], bike["registered_date"]]]
+            print(tabulate(table_data,headers=["Bike ID", "Model", "Type", "Availabel", "Registration date"], tablefmt="fancy_grid"))
+
+
+    print("\n--- Bike id not found. ---")
+
 
 # Handles user input to register a new bike and saves it to the data file
 def register_new_bike():
@@ -96,31 +126,3 @@ def register_new_bike():
 
     add_bike(bike_obj)
     print("\n--- Bike registered successfully! ---\n")
-
-
-def display_all_bikes():
-    bikes = load_bikes()
-    if not bikes:
-        print("\n--- No Bikes found. ---")
-        return
-
-    table_data = [[bike["bike_id"], bike["model"], bike["bike_type"], bike["is_available"], bike["registered_date"]]
-                  for bike in bikes]
-    print(tabulate(table_data, headers=["Bike ID", "Model", "Type", "Availabel", "Registration date"], tablefmt="fancy_grid"))
-
-
-
-def search_bike():
-    bikes = load_bikes()
-    if not bikes:
-        print("--- No bikes available. ---")
-        return
-
-    bike_id = input("Enter the bike ID: ").strip()
-    for bike in bikes:
-        if bike["bike_id"] == bike_id:
-            table_data = [[bike["bike_id"], bike["model"], bike["bike_type"], bike["is_available"], bike["registered_date"]]]
-            print(tabulate(table_data,headers=["Bike ID", "Model", "Type", "Availabel", "Registration date"], tablefmt="fancy_grid"))
-
-
-    print("\n--- Bike id not found. ---")

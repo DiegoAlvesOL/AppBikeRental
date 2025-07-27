@@ -25,8 +25,7 @@ bike_rental/
 ├── data/
 │   ├── bikes.json
 │   ├── customers.json
-│   ├── rentals.json
-│   └── rental_rates.json
+│   └── rentals.json
 ├── models/
 │   ├── bike.py
 │   ├── customer.py
@@ -37,7 +36,6 @@ bike_rental/
 │   └── rental_service.py
 ├── utils/
 │   ├── data_loader.py
-│   └── input_validation.py  # futuro
 ├── main.py
 ```
 

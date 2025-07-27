@@ -18,3 +18,4 @@ class Customer:
             "phone": self.phone,
             "registered_date": self.registered_date
         }
+

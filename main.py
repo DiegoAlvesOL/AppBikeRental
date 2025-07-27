@@ -35,19 +35,19 @@ while True:
         break
 
 
-    # Handles the user option to register a new bike.
+
     elif choice =="1":
         register_new_bike()
 
-    # Handles the user option to register a new customer.
+
     elif choice =="2":
         register_new_customer()
 
-    # Handles the user option to register a new rental.
+
     elif choice == "3":
         register_new_rent()
 
-    # Handles the user option to register the return of a bike
+
     elif choice == "4":
         register_bike_return()
 

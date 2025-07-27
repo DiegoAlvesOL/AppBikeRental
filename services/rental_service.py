@@ -162,6 +162,8 @@ def register_new_rent():
     set_bike_unavailable(bike_id)
     create_rental(rental_obj)
 
+    print("\n --- Rental successfully registered. --- \n")
+
 
 # Returns a list of rentals that are currently ongoing
 def get_ongoing_rentals():
@@ -216,3 +218,5 @@ def register_bike_return():
     rental["status"] = "Completed"
     update_rental_record(rental)
     set_bike_available(rental)
+
+    print("\n --- Rental successfully completed --- \n")
