@@ -9,7 +9,8 @@ import os.path
 from datetime import datetime, timedelta, date
 from tabulate import tabulate
 from models.rental import Rental
-from services.bike_service import available_bike, register_new_bike, valid_bike_id, set_bike_unavailable
+from services.bike_service import available_bike, register_new_bike, valid_bike_id, set_bike_unavailable, \
+    set_bike_available
 from services.customer_service import valid_customer_id, register_new_customer
 from utils.data_loader import load_rentals, load_rental_cost, load_bikes, load_customers
 
@@ -161,3 +162,57 @@ def register_new_rent():
     set_bike_unavailable(bike_id)
     create_rental(rental_obj)
 
+
+# Returns a list of rentals that are currently ongoing
+def get_ongoing_rentals():
+    rentals = load_rentals()
+    ongoing_rentals = []
+    for rental in rentals:
+        if rental["status"] == "Ongoing":
+            ongoing_rentals.append(rental)
+    return ongoing_rentals
+
+
+# Prompts the user to select a rental from the ongoing list using the rental ID
+def select_rental_by_id(ongoing_rentals):
+    rental_id = input("Enter the rental ID to complete the rental: ").strip()
+    for rental in ongoing_rentals:
+        if rental["rental_id"] == rental_id:
+            return rental
+    return None
+
+
+# Updates the rental record in the file by changing its status to "Completed"
+def update_rental_record(updated_rental):
+    rentals = load_rentals()
+    for rental in rentals:
+        if rental["rental_id"] == updated_rental["rental_id"]:
+            rental["status"] = updated_rental["status"]
+            break
+    with open(file_path_data_rentals, "w") as file:
+        json.dump(rentals, file, indent=4)
+
+# Handles the process of returning a bike, including selecting the rental,
+# updating its status, and making the bike available again
+def register_bike_return():
+    print("\n --- Returning a Bike ---\n")
+
+    ongoing_rentals = get_ongoing_rentals()
+    if not ongoing_rentals:
+        print("There are no ongoing rental at the moment. \n")
+        return
+
+    table_data = [[rental["rental_id"], rental["customer_id"],
+                   rental["bike_id"], rental["start_rental_date"]]
+                  for rental in ongoing_rentals]
+    print(tabulate(table_data, headers=["Rental ID", "Customer ID",
+                                        "Bike ID", "Start Date"], tablefmt="fancy_grid"))
+
+    rental = select_rental_by_id(ongoing_rentals)
+    if not rental:
+        print("\nRental ID not found or not ongoing.\n")
+        return
+
+    rental["status"] = "Completed"
+    update_rental_record(rental)
+    set_bike_available(rental)
