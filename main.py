@@ -3,10 +3,9 @@ This module provides the main user interface for the App Bike Rental System,
 allowing interaction through a command-line menu.
 """
 
-from services.bike_service import register_new_bike, set_bike_unavailable, available_bike
+from services.bike_service import register_new_bike
 from services.customer_service import register_new_customer
-from services.rental_service import calculate_cost, end_rental, create_rental, register_new_rent
-
+from services.rental_service import register_new_rent, register_bike_return
 
 print("+","="*37,"+")
 print("| WELCOME TO THE APP BIKE RENTAL SYSTEM |")
@@ -20,7 +19,7 @@ while True:
     print("| 4 - Return a bike", " "*19, "|")
     print("| 5 - Show all bikes"," "*18,"|")
     print("| 6 - Search bike by type or ID", " "*7,"|")
-    print("| 0 - Exit and save data", " "*14, "|")
+    print("| 0 - Exit", " "*28, "|")
     print("+","="*37, "+\n")
 
     choice = input("Enter your choice: ").strip()
@@ -43,5 +42,9 @@ while True:
     # Handles the user option to register a new rental.
     elif choice == "3":
         register_new_rent()
+
+    # Handles the user option to register the return of a bike
+    elif choice == "4":
+        register_bike_return()
 
 
